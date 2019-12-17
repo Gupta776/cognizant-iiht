@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         LOGGER.info("Start");
-//		auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder());
         LOGGER.info("End");
     }
     
@@ -42,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	httpSecurity.cors();
         httpSecurity.csrf().disable().httpBasic().and()
         .authorizeRequests()
-//        .antMatchers("/truyum/menu-items").anonymous()
-//        .antMatchers("/truyum/menu-items").permitAll()
-//        .antMatchers("/truyum/users").anonymous()
+//        .antMatchers("/stock-market-charting/menu-items").anonymous()
+//        .antMatchers("/stock-market-charting/authenticaiton").permitAll()
+        .antMatchers("/stock-market-charting/users").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilter(new JwtAuthorizationFilter(authenticationManager()));

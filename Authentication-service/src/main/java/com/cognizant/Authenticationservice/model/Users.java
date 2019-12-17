@@ -32,7 +32,7 @@ public class Users {
 	@Column(name = "us_email")
 	@NotNull
 	private String email;
-	@Column(name = "us_contact_number")
+	@Column(name = "us_mobile_number")
 	@NotNull
 	private String contactNumber;
 	@Column(name = "us_confirmed")
