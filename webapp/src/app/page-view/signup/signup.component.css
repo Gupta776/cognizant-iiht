@@ -1,0 +1,81 @@
+.btn-signup-color {
+    background-color: #2fc02f;
+}
+
+.form-container {
+    background: #ffffff;
+    width: 60vw;
+    position: relative;
+    top: 80px;
+    margin: 10px;
+    margin-bottom: 100px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000000;
+}
+
+@media only screen and (max-width: 1024px) {
+    .form-container {
+        width: 85vw;
+    }
+}
+
+.errorMessage {
+    color: red;
+    position: absolute;
+}
+
+label {
+    padding-top: 15px;
+}
+
+.fo {
+    font-weight: 500;
+    font-size: 30px;
+}
+
+
+/* .con-border {
+    border: 1px solid #CCC;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.con-border h3 {
+    display: inline-block;
+    background: #fff;
+    padding: 0 15px;
+    position: relative;
+    top: -30px;
+    text-transform: uppercase;
+    font-family: 'HelveticaNeue-Bold'!important;
+    font-size: 14px;
+    color: #d73421;
+} */
+
+.success-display {
+    align-content: center;
+    top: 30vw;
+    font-family: 'Odibee Sans', cursive;
+    font-size: 30px;
+    box-shadow: 0px 0px 10px 0px #000000;
+    padding: 20px 20px 10px 20px;
+    margin-top: 100px;
+    text-align: center;
+    border-radius: 30px;
+    ;
+}
+
+hr {
+    border-color: #2fc02f;
+}
+
+.manditory {
+    font-size: 40px;
+    color: red;
+    padding-top: 30px;
+}
+
+span {
+    font-size: 30px;
+}

@@ -46,13 +46,7 @@ CREATE TABLE IF NOT EXISTS `stock_market_charting`.`company` (
   `cp_se_id` INT NOT NULL,
   `cp_brief` VARCHAR(600) NOT NULL,
   `cp_stock_code` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`cp_id`),
-  INDEX `cp_se_fk_idx` (`cp_se_id` ASC),
-  CONSTRAINT `cp_se_fk`
-    FOREIGN KEY (`cp_se_id`)
-    REFERENCES `stock_market_chart`.`sector` (`se_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`cp_id`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_price` (
@@ -96,6 +90,12 @@ CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_exchange` (
   PRIMARY KEY (`ex_id`))
 ENGINE = InnoDB;
 
-
-insert into user values (1,'admin','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','admin@gmail.com',9999999999,true);
-insert into user values (2,'user','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','user@gmail.com',8888888888,true);
+create table `confirmation_table`(
+	`ct_id` INT NOT NULL AUTO_INCREMENT,
+  `ct_token` VARCHAR(200) NOT NULL,
+  `ct_user_name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`ct_id`)
+)
+engine = InnoDB;
+insert into user values (1,'admin','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','ctstestmail10@gmail.com',9999999999,true);
+insert into user values (2,'user','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','ctstestmail10@gmail.com',8888888888,true);

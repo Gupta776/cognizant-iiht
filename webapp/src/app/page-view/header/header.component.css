@@ -1,0 +1,86 @@
+header {
+    background-color: #ffffff;
+    width: 100%;
+    /* z-index: 1; */
+    border-bottom: 5px solid black;
+}
+
+a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Lobster', cursive;
+}
+
+a:hover {
+    color: #741caf;
+    text-decoration: underline #741caf;
+}
+
+.name {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Lobster', cursive;
+}
+
+h2 {
+    font-family: 'Fredericka the Great', cursive;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.logo1 {
+    font-size: 70px;
+    color: rgb(0, 0, 0);
+}
+
+.fourStyle {
+    color: #2fc02f;
+    font-family: 'Lobster', cursive;
+}
+
+h2 {
+    font-weight: 800;
+    font-size: 40px;
+}
+
+i {
+    font-size: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+    h2 {
+        font-weight: 500;
+        font-size: 25px;
+    }
+    .logo1 {
+        font-size: 35px;
+    }
+    a,
+    .name {
+        font-size: 20px;
+    }
+}
+@media (min-width:950px) and  (max-width:1300px){
+    a, .name{
+        font-size:15px;
+        /* padding-top:10px; */
+    }
+    .icon-size{
+        font-size:15px;
+       
+    }
+    i{
+        padding: 0px;
+        margin: 0px;
+    }
+    h2 {
+        font-weight: 500;
+        font-size: 35px;
+    }
+    .logo1 {
+        font-size:45px;
+    }
+}
+

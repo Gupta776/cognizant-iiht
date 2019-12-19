@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
 //        .antMatchers("/stock-market-charting/menu-items").anonymous()
 //        .antMatchers("/stock-market-charting/authenticaiton").permitAll()
-        .antMatchers("/stock-market-charting/users").permitAll()
+        .antMatchers("/stock-market-charting/users").anonymous()
+        .antMatchers("/stock-market-charting/users/confirm/{token}").permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilter(new JwtAuthorizationFilter(authenticationManager()));

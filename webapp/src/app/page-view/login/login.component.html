@@ -1,1 +1,81 @@
-<p>login works!</p>
+
+
+<section class="row justify-content-center">
+    <form class="form-container" [formGroup]='loginForm' (ngSubmit)='onSubmit()'>
+        <h4 class="style-login">Login </h4>
+        <div *ngIf='errorFlag == true' class='border border-danger rounded p-2 '>
+            <small>
+                    Username or Password entered is incorrect.
+                </small>
+        </div>
+        <div *ngIf='pendingFlag == true' class='border border-danger rounded p-2 '>
+            <small>
+                        Your account is still in pending.
+                    </small>
+        </div>
+        <div *ngIf='userFlag == true' class='border border-danger rounded p-2 '>
+            <small>
+                    Login before adding to cart.
+                </small>
+        </div>
+        <div class="form-group">
+            <label for="userName">Username<span class="text-danger">*</span></label>
+            <input type="text" [ngClass]="[(loginForm.controls.userName.dirty ||loginForm.controls.userName.touched) &&loginForm.controls.userName.valid ? 'is-valid' : '',
+                                    (loginForm.controls.userName.dirty ||loginForm.controls.userName.touched) &&loginForm.controls.userName.invalid ? 'is-invalid' : '', 
+                                    (loginForm.controls.userName.valid ||loginForm.controls.userName.invalid) ? 'form-control' : '']" id="userName" formControlName="userName" placeholder="Enter Username">
+            <div *ngIf="(!loginForm.controls.userName.valid && (loginForm.controls.userName.dirty || loginForm.controls.userName.touched))">
+                <div *ngIf=" loginForm.controls.userName.errors.required">
+                    <small class='errorMessage'> User Name is required</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password<span class="text-danger">*</span></label>
+            <input type="password"  [ngClass]="[(loginForm.controls.password.dirty ||loginForm.controls.password.touched) &&loginForm.controls.password.valid ? 'is-valid' : '',
+                                    (loginForm.controls.password.dirty ||loginForm.controls.password.touched) &&loginForm.controls.password.invalid ? 'is-invalid' : '', 
+                                    (loginForm.controls.password.valid ||loginForm.controls.password.invalid) ? 'form-control' : '']" id="password" formControlName="password" placeholder="Enter Password">
+            <div *ngIf="(!loginForm.controls.password.valid && (loginForm.controls.password.dirty || loginForm.controls.password.touched))">
+                <div *ngIf=" loginForm.controls.password.errors.required">
+                    <small class='errorMessage'>Password is required</small>
+                </div>
+            </div>
+            <!-- <input type="checkbox" onclick="myFunction()">Show Password -->
+        </div>
+        <div class="form-group">
+            <div class="row justify-content-center">
+                <button type="submit" class="btn btn-signup-color mt-3 pr-3 pl-3" [disabled]='!loginForm.valid'>Login</button>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="row justify-content-center">
+
+
+                <small class="text-muted navigateLinks">New here?
+                        <a routerLink="/signup" class="text-primary">Signup</a>
+                    </small>
+            </div>
+            <!-- <div class="row justify-content-around">
+                <small class="text-muted navigateLinks">
+                            <a  class="text-danger" (click)="goToForgotUserID()">Forget user id??</a>
+
+                        </small>
+
+                <small class="text-muted navigateLinks">
+                                <a  class="text-danger" (click)="goToForgotPassword()">Forget user Password ??</a>
+                                
+                            </small>
+            </div> -->
+        </div>
+    </form>
+</section>
+<!-- <script>
+    function myFunction() {
+      var x = document.getElementById("myInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+    </script> -->

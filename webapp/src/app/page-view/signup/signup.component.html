@@ -1,1 +1,113 @@
-<p>signup works!</p>
+<section class="container">
+    <div *ngIf="newUserFlag == false">
+        <section class="row justify-content-center">
+            <form class="form-container" [formGroup]='signupForm'>
+                <h4>Signup</h4>
+                <div *ngIf='existFlag == true' class="border border-danger rounded p-2 ">
+                    <small>
+                        User already exist enter new username
+                    </small></div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="userName">Username <span class="text-danger">*</span></label>
+                        <input type="text"
+                            [ngClass]="[(signupForm.controls.userName.dirty || signupForm.controls.userName.touched) && signupForm.controls.userName.valid ? 'is-valid' : '',
+                                                            (signupForm.controls.userName.dirty || signupForm.controls.userName.touched) && signupForm.controls.userName.invalid ? 'is-invalid' : '', 
+                                                            (signupForm.controls.userName.valid || signupForm.controls.userName.invalid) ? 'form-control' : '']"
+                            id="userName" formControlName="userName" placeholder="Enter Username">
+                        <div
+                            *ngIf="(!signupForm.controls.userName.valid && (signupForm.controls.userName.dirty || signupForm.controls.userName.touched))">
+                            <div *ngIf=" signupForm.controls.userName.errors.required">
+                                <small class='errorMessage'> User Name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password"
+                            [ngClass]="[(signupForm.controls.password.dirty || signupForm.controls.password.touched) && signupForm.controls.password.valid ? 'is-valid' : '',
+                                                            (signupForm.controls.password.dirty || signupForm.controls.password.touched) && signupForm.controls.password.invalid ? 'is-invalid' : '', 
+                                                            (signupForm.controls.password.valid || signupForm.controls.password.invalid) ? 'form-control' : '']"
+                            id="password" formControlName="password" placeholder="Enter Password">
+                        <div
+                            *ngIf="(!signupForm.controls.password.valid && (signupForm.controls.password.dirty || signupForm.controls.password.touched))">
+                            <div *ngIf=" signupForm.controls.password.errors.required">
+                                <small class='errorMessage'> Password is required</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <label for="confirmPassword">Confirm Password <span class="text-danger">*</span></label>
+                        <input type="password"
+                            [ngClass]="[(signupForm.controls.confirmPassword.dirty || signupForm.controls.confirmPassword.touched) && signupForm.controls.confirmPassword.valid ? 'is-valid' : '',
+                                                            (signupForm.controls.confirmPassword.dirty || signupForm.controls.confirmPassword.touched) && signupForm.controls.confirmPassword.invalid ? 'is-invalid' : '', 
+                                                            (signupForm.controls.confirmPassword.valid || signupForm.controls.confirmPassword.invalid) ? 'form-control' : '']"
+                            id="confirmPassword" formControlName="confirmPassword" placeholder="Enter Confirm Password"
+                            (keyup)='passwordMatch()'>
+                        <div
+                            *ngIf="(!signupForm.controls.confirmPassword.valid && (signupForm.controls.confirmPassword.dirty || signupForm.controls.confirmPassword.touched))">
+                            <div *ngIf=" signupForm.controls.confirmPassword.errors.required">
+                                <small class='errorMessage'>Confirm Password is required</small>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf='(signupForm.controls.confirmPassword.valid && (signupForm.controls.confirmPassword.dirty || signupForm.controls.confirmPassword.touched))'>
+                            <div *ngIf='passwordFlag == false'>
+                                <small class='errorMessage'> Password is not matching</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <label for="email"> Email <span class="text-danger">*</span></label>
+                        <input type="text"
+                            [ngClass]="[(signupForm.controls.email.dirty || signupForm.controls.email.touched) && signupForm.controls.email.valid ? 'is-valid' : '',
+                                                (signupForm.controls.email.dirty || signupForm.controls.email.touched) && signupForm.controls.email.invalid ? 'is-invalid' : '', 
+                                                (signupForm.controls.email.valid || signupForm.controls.email.invalid) ? 'form-control' : '']"
+                            placeholder="Enter email" id="email" formControlName="email" />
+                        <div
+                            *ngIf="(!signupForm.controls.email.valid && (signupForm.controls.email.dirty || signupForm.controls.email.touched))">
+                            <div *ngIf=" signupForm.controls.email.errors.required">
+                                <small class='errorMessage'> email is required</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <label for="contactNumber"> Contact Number <span class="text-danger">*</span></label>
+                        <input type="text"
+                            [ngClass]="[(signupForm.controls.contactNumber.dirty || signupForm.controls.contactNumber.touched) && signupForm.controls.contactNumber.valid ? 'is-valid' : '',
+                                                (signupForm.controls.contactNumber.dirty || signupForm.controls.contactNumber.touched) && signupForm.controls.contactNumber.invalid ? 'is-invalid' : '', 
+                                                (signupForm.controls.contactNumber.valid || signupForm.controls.contactNumber.invalid) ? 'form-control' : '']"
+                            placeholder="Enter Contact Number" id="contactNumber" formControlName="contactNumber" />
+                        <div
+                            *ngIf="(!signupForm.controls.contactNumber.valid && (signupForm.controls.contactNumber.dirty || signupForm.controls.contactNumber.touched))">
+                            <div *ngIf=" signupForm.controls.contactNumber.errors.required">
+                                <small class='errorMessage'> contactNumber is required</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
+
+                <div class="row">
+                    <div class="col-12 ">
+                        <button type="button" (click)='onSubmit()' [disabled]='!signupForm.valid'
+                            class="btn btn-signup-color mt-3 text-white">Signup</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div *ngIf="newUserFlag == true">
+        <div class="success-display">
+            <p>User is Created successfully</p>
+            <p>Press <a routerLink="/login" routerLinkActive="active-link" class="text-success">Login</a> to enter</p>
+        </div>
+    </div>
+</section>

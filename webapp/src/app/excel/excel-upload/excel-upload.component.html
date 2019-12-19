@@ -1,0 +1,20 @@
+<!-- <div class="">
+    <input type="file" 
+    (change)="fileChange($event)"
+    placeholder="Upload file" 
+    accept=".pdf,.doc,.docx,.xlsx">
+</div> -->
+
+<label class="file row justify-content-center pt-5 ">
+    <input type="file" 
+    (change)="fileChange($event)"
+    placeholder="Upload file" 
+    id="file" aria-label="File browser example"
+    accept=".pdf,.doc,.docx,.xlsx">
+    <!-- <input type="file" id="file" aria-label="File browser example"> -->
+    <span class="file-custom"></span>
+  </label>
+
+<div  *ngIf="uploadFlag">
+  <app-summary></app-summary>
+</div>

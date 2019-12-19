@@ -1,0 +1,71 @@
+<!-- <app-search-company (companySearchList)="searchCompany($event)"></app-search-company> -->
+<section class="jumbotron">
+    <h1 class="text-primary ">Find Company </h1>
+    <div class="row">
+        <div class="col-7">
+            <div class="input-group md-form form-sm form-1 pl-0">
+                <div class="input-group-prepend">
+                    <span class="input-group-text purple lighten-3" id="basic-text1"><i
+                            class="material-icons align-middle">search</i> </span>
+                </div>
+                <input class="form-control my-0 py-1" type="text" placeholder="Search" [(ngModel)]="searchData"
+                    (keyup)="filterData()" aria-label="Search">
+            </div>
+        </div>
+        <div class="col-4">
+
+        </div>
+
+    </div>
+</section>
+
+
+<div class="container move-up">
+    <div class="row bottom-change">
+        <div class="col-lg-3 col-md-4 col-sm-6 my-2" *ngFor='let item of filterCompanyList'>
+            <!-- <app-company-details [item]="company"></app-company-details> -->
+            <div class="card">
+
+                <p class="row justify-content-center heading">{{item.name}}</p>
+                <!-- <h3></h3> -->
+                <p class="title row justify-content-center">CEO : <span class="text-danger">{{item.ceo}}</span> </p>
+                <p  class=" row justify-content-center">Turnover : {{item.turnover | currency}}</p>
+                <p  class=" row justify-content-center">Sector : {{item.sector.sectorName}}</p>
+                <a class="mx-2 row justify-content-center" (click)="plot(item.companyCode)">
+                        <p class="btn btn-success">Chart<i class="icon-edit mb-1 material-icons align-middle text-danger">show_chart</i></p>
+                </a>
+                <button type="submit" (click)="companyInfo(item)" value="submit" class="more-info"
+                        data-toggle="modal" data-target="#myModal">More Info</button>
+                
+                        
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content d-flex justify-content-center">
+            <div class="modal-header ">
+                <h4 class="modal-title">About {{companyDetail?.name}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body d-flex justify-content-between ">
+                    <ul class="list-group">
+                        <h5>Board of directors</h5>
+                        <div *ngFor="let directors of companyDetail?.boardOfDirectorsList">
+                            <li>{{directors.name}}</li>
+                        </div>
+                    </ul>
+                    <ul class="list-group">
+                        <h5>Listed stock exchanges & current prices</h5>
+                        <div *ngFor="let list of stockDetailsLatestList">
+                            <li>{{list.stockExchange}} - {{list.currentPrice | currency}}</li>
+                        </div>
+                    </ul>
+                    
+                    </div>
+        </div>
+    </div>
+</div>

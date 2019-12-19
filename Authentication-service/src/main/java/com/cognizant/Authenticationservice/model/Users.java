@@ -37,7 +37,7 @@ public class Users {
 	private String contactNumber;
 	@Column(name = "us_confirmed")
 	@NotNull
-	private Boolean confirmed;
+	private boolean confirmed;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "ur_us_id"), inverseJoinColumns = @JoinColumn(name = "ur_ro_id"))
 	private Set<Role> roleList;
@@ -46,7 +46,7 @@ public class Users {
 		// TODO Auto-generated constructor stub
 	}
 	public Users(@NotNull int id, @NotNull String userName, @NotNull String password, @NotNull String email,
-			@NotNull String contactNumber, @NotNull Boolean confirmed) {
+			@NotNull String contactNumber, @NotNull boolean confirmed) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -54,6 +54,18 @@ public class Users {
 		this.email = email;
 		this.contactNumber = contactNumber;
 		this.confirmed = confirmed;
+	}
+	
+	public Users(@NotNull int id, @NotNull String userName, @NotNull String password, @NotNull String email,
+			@NotNull String contactNumber, @NotNull boolean confirmed, Set<Role> roleList) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.contactNumber = contactNumber;
+		this.confirmed = confirmed;
+		this.roleList = roleList;
 	}
 	public int getId() {
 		return id;
@@ -85,13 +97,14 @@ public class Users {
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-	public Boolean getConfirmed() {
+	
+	
+	public boolean isConfirmed() {
 		return confirmed;
 	}
-	public void setConfirmed(Boolean confirmed) {
+	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
 	}
-	
 	public Set<Role> getRoleList() {
 		return roleList;
 	}

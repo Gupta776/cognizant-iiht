@@ -11,6 +11,16 @@ import { DatePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './page-view/home/home.component';
+import { ExcelUploadComponent } from './excel/excel-upload/excel-upload.component';
+import { SummaryComponent } from './excel/summary/summary.component';
+import { ProfileUpdateComponent } from './user/profile-update/profile-update.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { SearchCompanyComponent } from './company/search-company/search-company.component';
+import { CompanyComponent } from './company/company/company.component';
+import { CompanyDetailsComponent } from './company/company-details/company-details.component';
+import { ChartComponent } from './user/chart/chart.component';
+import { ChartCompareComponent } from './user/chart-compare/chart-compare.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +28,17 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent,
+    ExcelUploadComponent,
+    SummaryComponent,
+    ProfileUpdateComponent,
+    AdminHomeComponent,
+    SearchCompanyComponent,
+    CompanyComponent,
+    CompanyDetailsComponent,
+    ChartComponent,
+    ChartCompareComponent
   ],
   imports: [
     BrowserModule,

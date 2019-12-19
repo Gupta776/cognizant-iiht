@@ -48,9 +48,10 @@ public class AppUserDetailsService implements UserDetailsService {
 		System.out.println(usersRepository.findByUserName(user.getUserName()));
 		if (usersRepository.findByUserName(user.getUserName()) != null) {
 		} else {
-			Set<Role> role = new HashSet();
-			role.add(new Role(1, "user"));
+			Set<Role> role = new HashSet<Role>();
+			role.add(new Role(2, "user"));
 			user.setRoleList(role);
+			
 			usersRepository.save(user);
 		}
 	}
