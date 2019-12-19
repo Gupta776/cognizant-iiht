@@ -22,9 +22,6 @@ export class CompanyComponent implements OnInit {
   ngOnInit() {
     this.getAllCompanies();
   }
-  // filterData() {
-  //  this.filterCompanyList= this.companySearchList.emit(this.searchData);
-  // }
   getAllCompanies(){
     this.companyService.getAllCompanies().subscribe((response)=>{
       console.log(response);

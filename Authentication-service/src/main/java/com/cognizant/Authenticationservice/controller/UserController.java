@@ -46,28 +46,27 @@ public class UserController {
 
 	@PostMapping
 	public void signup(@RequestBody @Valid Users user) throws UserAlreadyExistException {
-//		LOGGER.info("Start");
-// 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-//		appUserDetailsService.signup(user);
-//		LOGGER.info("End");
 		LOGGER.info("Start");
-		System.out.println(user);
 		String password = user.getPassword();
 		user.setPassword(passwordEncoder.encode(password));
 		appUserDetailsService.signup(user);
 		String token = userConfirmationService.setTokenForConfirmation(user.getUserName());
-		emailServiceImpl.send("ctstestmail10@gmail.com", user.getEmail(), "confirm your email", "http://localhost:8210/authentication-service/stock-market-charting/users/confirm/"+token);
+		emailServiceImpl.send("ctstestmail10@gmail.com", user.getEmail(), "confirm your email",
+				"http://localhost:8210/authentication-service/stock-market-charting/users/confirm/" + token);
 		LOGGER.info("End");
 	}
+
 	@GetMapping("/confirm/{token}")
 	public void confirmMail(@PathVariable String token) {
 		userConfirmationService.confirmMailAddress(token);
 	}
+
 	@PutMapping("/update-user")
 	public void updateDetails(@RequestBody Users user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userServices.updateDetails(user);
 	}
+
 	@GetMapping("/get-user/{username}")
 	public Users getUser(@PathVariable String username) {
 		return userRepository.findByUserName(username);

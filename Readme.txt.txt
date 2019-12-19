@@ -12,7 +12,7 @@ Ports:
 
 Steps to Execute
 
-Step 0: Run the schema creation file in dbscript named as schema.sql (it containse
+Step 0: Run the schema creation file in dbscript named as schema.sql (it contains data also)
 
 Step 1: Run the eureka-discovery-service => Port: 8761
 
@@ -28,7 +28,8 @@ Step 5: Run the zuul-gateway => Port: 8210
 
 
 Test Cases : Screenshots attached in following folders under Testing-screenshots
-	1) Junit Test cases
+	1) mid tier Test cases
 	2) karma-testing
 	3) Postman
+	4)Jmeter
 

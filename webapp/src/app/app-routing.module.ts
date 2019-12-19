@@ -14,7 +14,7 @@ import { ChartCompareComponent } from './user/chart-compare/chart-compare.compon
 const routes: Routes = [
   // {path:"",component:HomeComponent},
   {path:"",component:LoginComponent},
-  {path:"home",component:HomeComponent, canActivate:[AuthenticationGuard]},
+  {path:"home",component:HomeComponent},
   {path:"company-main-page",component:CompanyComponent},
   {path:"charts/:code",component:ChartComponent},
   {path:"excel-upload",component:ExcelUploadComponent, canActivate:[AuthenticationGuard]},

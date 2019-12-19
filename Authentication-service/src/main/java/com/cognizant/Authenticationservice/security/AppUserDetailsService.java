@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cognizant.Authenticationservice.exception.UserAlreadyExistException;
 import com.cognizant.Authenticationservice.model.Role;
 import com.cognizant.Authenticationservice.model.Users;
 import com.cognizant.Authenticationservice.repository.UserRepository;
@@ -44,9 +45,10 @@ public class AppUserDetailsService implements UserDetailsService {
 	}
 
 	@Transactional
-	public void signup(Users user) {
+	public void signup(Users user) throws UserAlreadyExistException {
 		System.out.println(usersRepository.findByUserName(user.getUserName()));
 		if (usersRepository.findByUserName(user.getUserName()) != null) {
+			throw new UserAlreadyExistException();
 		} else {
 			Set<Role> role = new HashSet<Role>();
 			role.add(new Role(2, "user"));

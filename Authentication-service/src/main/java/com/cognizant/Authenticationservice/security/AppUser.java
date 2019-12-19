@@ -35,7 +35,6 @@ public class AppUser implements UserDetails {
 		return this.user.getUserName();
 	}
 
-//
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;

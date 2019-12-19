@@ -28,6 +28,7 @@ public class AuthenticationController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 	@Autowired
 	UserService userService;
+
 	@GetMapping("/authentication")
 	public Map<String, String> authenticate(@RequestHeader("Authorization") String authHeader) {
 		LOGGER.info("start");
@@ -35,11 +36,11 @@ public class AuthenticationController {
 		String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userName = authentication.getName();
-		Users user=userService.getByUserName(userName);
+		Users user = userService.getByUserName(userName);
 		data.put("token", generateJwt(getUser(authHeader)));
 		data.put("role", role);
 		data.put("userName", userName);
-		data.put("confirmed", user.isConfirmed()+"");
+		data.put("confirmed", user.isConfirmed() + "");
 		LOGGER.info("End");
 		return data;
 	}

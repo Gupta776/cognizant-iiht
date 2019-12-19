@@ -19,6 +19,7 @@ import com.cognizant.Authenticationservice.model.Role;
 import com.cognizant.Authenticationservice.model.Users;
 import com.cognizant.Authenticationservice.security.AppUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -28,19 +29,13 @@ class AuthenticationServiceApplicationTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	
 	@Test
 	public void addUser() throws Exception {
-
 		Set<Role> role = new HashSet<Role>();
 		role.add(new Role(2, "user"));
-		
 		mockMvc.perform(MockMvcRequestBuilders.post("/stock-market-charting/users")
-				.content(asJsonString(new Users(100, "users", "abcd", "testmal76@gmail.com", "8585858585",true, role)))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
-					.andExpect(status().isOk());
-				
+				.content(asJsonString(new Users(100, "users", "abcd", "testmal76@gmail.com", "8585858585", true, role)))
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
 	public static String asJsonString(final Object obj) {
@@ -50,5 +45,4 @@ class AuthenticationServiceApplicationTests {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

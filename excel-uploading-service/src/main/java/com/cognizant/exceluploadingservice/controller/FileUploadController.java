@@ -32,7 +32,7 @@ public class FileUploadController {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
         String fileName = file.getOriginalFilename();
-        File dir = new File("C:\\Users\\Admin\\Desktop\\stockMarket\\cognizant-iiht\\excel-file");
+        File dir = new File("C:\\Users\\Admin\\Documents");
         if (dir.isDirectory()) {
           File serverFile = new File(dir, fileName);
           BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
