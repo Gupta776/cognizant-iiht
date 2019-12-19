@@ -1,57 +1,86 @@
-create schema `stock_market_charting`;
-use `stock_market_charting`;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`user` (
+-- -----------------------------------------------------
+-- Schema stock_market_chart
+-- -----------------------------------------------------
+
+CREATE SCHEMA IF NOT EXISTS `stock_market_chart` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `stock_market_chart` ;
+
+
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`user` (
   `us_id` INT NOT NULL AUTO_INCREMENT,
-  `us_user_name` VARCHAR(15) NOT NULL,
-  `us_password` VARCHAR(200) NOT NULL,
+  `us_user_name` VARCHAR(60) NULL,
+  `us_password` VARCHAR(60) NOT NULL,
   `us_email` VARCHAR(50) NOT NULL,
-  `us_mobile_number` VARCHAR(10) NOT NULL,
+  `us_mobile_number` VARCHAR(12) NOT NULL,
   `us_confirmed` BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (`us_id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`role` (
+
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`role` (
   `ro_id` INT NOT NULL AUTO_INCREMENT,
-  `ro_name` VARCHAR(45) NULL DEFAULT NULL,
+  `ro_name` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`ro_id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`user_role` (
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`user_role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`user_role` (
   `ur_id` INT NOT NULL AUTO_INCREMENT,
-  `ur_us_id` INT NOT NULL,
-  `ur_ro_id` INT NOT NULL,
+  `ur_us_id` INT NULL,
+  `ur_ro_id` INT NULL,
   PRIMARY KEY (`ur_id`),
-  INDEX `fk_user_role_user1_idx` (`ur_us_id` ASC),
-  INDEX `fk_user_role_role1_idx` (`ur_ro_id` ASC),
-  CONSTRAINT `fk_user_role_user1`
+  INDEX `ur_us_fk_idx` (`ur_us_id` ASC),
+  INDEX `ur_ro_fk_idx` (`ur_ro_id` ASC),
+  CONSTRAINT `ur_us_fk`
     FOREIGN KEY (`ur_us_id`)
-    REFERENCES `stock_market_charting`.`user` (`us_id`)
+    REFERENCES `stock_market_chart`.`user` (`us_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_role_role1`
+  CONSTRAINT `ur_ro_fk`
     FOREIGN KEY (`ur_ro_id`)
-    REFERENCES `stock_market_charting`.`role` (`ro_id`)
+    REFERENCES `stock_market_chart`.`role` (`ro_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`company` (
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`company`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`company` (
   `cp_id` INT NOT NULL AUTO_INCREMENT,
+  `cp_code` BIGINT NOT NULL,
   `cp_name` VARCHAR(30) NOT NULL,
   `cp_turnover` BIGINT NOT NULL,
   `cp_ceo` VARCHAR(30) NOT NULL,
-  `cp_board_of_directors` VARCHAR(30) NOT NULL,
-  `cp_listed_stock_exchanges` BOOLEAN DEFAULT FALSE,
+  `cp_listed` BOOLEAN DEFAULT FALSE,
   `cp_se_id` INT NOT NULL,
   `cp_brief` VARCHAR(600) NOT NULL,
-  `cp_stock_code` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`cp_id`))
+  PRIMARY KEY (`cp_id`),
+  INDEX `cp_se_fk_idx` (`cp_se_id` ASC),
+  CONSTRAINT `cp_se_fk`
+    FOREIGN KEY (`cp_se_id`)
+    REFERENCES `stock_market_chart`.`sector` (`se_id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_price` (
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`stock_price`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`stock_price` (
   `sp_id` INT NOT NULL AUTO_INCREMENT,
-  `sp_company_code` VARCHAR(20) NOT NULL,
+  `sp_code` BIGINT NOT NULL,
   `sp_stock_exchange` VARCHAR(30) NOT NULL,
   `sp_current_price` BIGINT NOT NULL,
   `sp_date` DATE NOT NULL,
@@ -59,7 +88,11 @@ CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_price` (
    PRIMARY KEY (`sp_id`) )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`ipo` (
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`ipo`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`ipo` (
   `ipo_id` INT NOT NULL AUTO_INCREMENT,
   `ipo_company_name` VARCHAR(30) NOT NULL,
   `ipo_stock_exchange` VARCHAR(30) NOT NULL,
@@ -74,14 +107,18 @@ ENGINE = InnoDB;
 -- Table `stock_market_chart`.`sector`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`sector` (
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`sector` (
   `se_id` INT NOT NULL AUTO_INCREMENT,
   `se_sector_name` VARCHAR(30) NOT NULL,
   `se_brief` VARCHAR(400) NOT NULL,
   PRIMARY KEY (`se_id`))
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_exchange` (
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`company`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`stock_exchange` (
   `ex_id` INT NOT NULL AUTO_INCREMENT,
   `ex_stock_exchange` VARCHAR(30) NOT NULL,
   `ex_brief` VARCHAR(400) NOT NULL,
@@ -90,12 +127,86 @@ CREATE TABLE IF NOT EXISTS `stock_market_charting`.`stock_exchange` (
   PRIMARY KEY (`ex_id`))
 ENGINE = InnoDB;
 
-create table `confirmation_table`(
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`company_stock` (
+	`cs_id` INT NOT NULL AUTO_INCREMENT,
+	`cs_cp_id` INT NULL,
+	`cs_ex_id` INT NULL,
+	PRIMARY KEY (`cs_id`),
+	INDEX `cs_cp_fk_idx` (`cs_cp_id` ASC),
+	INDEX `cs_ex_fk_idx` (`cs_ex_id` ASC),
+	CONSTRAINT `cs_cp_fk`
+		FOREIGN KEY (`cs_cp_id`)
+		REFERENCES `stock_market_chart`.`company` (`cp_id`)
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION,
+	CONSTRAINT `cs_ex_fk`
+		FOREIGN KEY (`cs_ex_id`)
+		REFERENCES `stock_market_chart`.`stock_exchange` (`ex_id`)
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION)
+	ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `stock_market_chart`.`board_members`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `stock_market_chart`.`board_members` (
+  `bm_id` INT NOT NULL AUTO_INCREMENT,
+  `bm_cp_name` VARCHAR(30) NOT NULL,
+  `bm_cp_id` INT NOT NULL,
+  PRIMARY KEY (`bm_id`),
+  INDEX `bm_cp_fk_idx` (`bm_cp_id` ASC),
+   CONSTRAINT `bm_cp_fk`
+    FOREIGN KEY (`bm_cp_id`)
+    REFERENCES `stock_market_chart`.`company` (`cp_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+  )
+  
+ENGINE = InnoDB;
+
+create table `stock_market_chart`.`confirmation_table`(
 	`ct_id` INT NOT NULL AUTO_INCREMENT,
   `ct_token` VARCHAR(200) NOT NULL,
   `ct_user_name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`ct_id`)
 )
 engine = InnoDB;
+
+select * from user;
 insert into user values (1,'admin','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','ctstestmail10@gmail.com',9999999999,true);
 insert into user values (2,'user','$2a$10$iRI4oISXx8APJNlj7i9/JO5oaGtKNztI3cuXOvtSs7jhHOJ/nlSOS','ctstestmail10@gmail.com',8888888888,true);
+
+insert into role values (1,'admin');
+insert into role values (2,'user');
+
+insert into user_role values (1,1,1);
+insert into user_role values (2,2,2);
+
+select * from company;
+
+INSERT INTO `stock_market_chart`.`sector` (`se_id`, `se_sector_name`, `se_brief`) VALUES ('2', 'Software', 'IT');
+INSERT INTO `stock_market_chart`.`sector` (`se_id`, `se_sector_name`, `se_brief`) VALUES ('1', 'Banking', 'banks sector');
+INSERT INTO `stock_market_chart`.`company` (`cp_id`, `cp_code`, `cp_name`, `cp_turnover`, `cp_ceo`, `cp_listed`, `cp_se_id`, `cp_brief`) VALUES ('1', '500112', 'BOI', '54685', 'GURU', '1', '1', 'bank of India');
+INSERT INTO `stock_market_chart`.`company` (`cp_id`, `cp_code`, `cp_name`, `cp_turnover`, `cp_ceo`, `cp_listed`, `cp_se_id`, `cp_brief`) VALUES ('2', '500113', 'SBI', '54688', 'Zain', '1', '1', 'statebank of India');
+INSERT INTO `stock_market_chart`.`company` (`cp_id`, `cp_code`, `cp_name`, `cp_turnover`, `cp_ceo`, `cp_listed`, `cp_se_id`, `cp_brief`) VALUES ('3', '500114', 'Google', '546899', 'Rohith', '1', '2', 'Search engine company');
+INSERT INTO `stock_market_chart`.`company` (`cp_id`, `cp_code`, `cp_name`, `cp_turnover`, `cp_ceo`, `cp_listed`, `cp_se_id`, `cp_brief`) VALUES ('4', '500115', 'Microsoft', '546898', 'Avinash', '0', '2', 'laptop company');
+INSERT INTO `stock_market_chart`.`stock_exchange` (`ex_id`, `ex_stock_exchange`, `ex_brief`, `ex_address`, `ex_remarks`) VALUES ('1', 'BSE', 'british', 'kuruku theru', 'nil');
+INSERT INTO `stock_market_chart`.`stock_exchange` (`ex_id`, `ex_stock_exchange`, `ex_brief`, `ex_address`, `ex_remarks`) VALUES ('2', 'CSE', 'british', 'kuruku theru', 'nil');
+INSERT INTO `stock_market_chart`.`stock_exchange` (`ex_id`, `ex_stock_exchange`, `ex_brief`, `ex_address`, `ex_remarks`) VALUES ('3', 'NSE', 'british', 'kuruku theru', 'nil');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('1', '1', '1');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('2', '1', '2');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('3', '2', '1');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('4', '3', '3');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('5', '4', '2');
+INSERT INTO `stock_market_chart`.`company_stock` (`cs_id`, `cs_cp_id`, `cs_ex_id`) VALUES ('6', '4', '1');
+
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("john",1);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("sam",1);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Elon",2);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Pichai",2);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Satya",3);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Premji",3);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Rick",4);
+INSERT INTO `stock_market_chart`.`board_members`(`bm_cp_name`,`bm_cp_id`) values("Morty",4);
+select * from stock_price;
+insert into stock_price values(55,500112,'BSE',3540,'2019-12-18','11:05:05');

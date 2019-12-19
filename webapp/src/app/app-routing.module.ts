@@ -20,8 +20,8 @@ const routes: Routes = [
   {path:"excel-upload",component:ExcelUploadComponent, canActivate:[AuthenticationGuard]},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"profile-update",component: ProfileUpdateComponent},
-  {path:"compare-charts",component:ChartCompareComponent}
+  {path:"profile-update",component: ProfileUpdateComponent, canActivate:[AuthenticationGuard]},
+  {path:"compare-charts",component:ChartCompareComponent, canActivate:[AuthenticationGuard]}
 ];
 
 @NgModule({

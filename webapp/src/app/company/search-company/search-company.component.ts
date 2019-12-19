@@ -6,10 +6,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search-company.component.css']
 })
 export class SearchCompanyComponent implements OnInit {
-  @Output() companySearchList: any;
-  searchData : String;
+ 
   constructor() { 
-    this.companySearchList = new EventEmitter;
   }
 
   ngOnInit() {

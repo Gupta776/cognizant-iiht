@@ -23,11 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @SpringBootTest
 class AuthenticationServiceApplicationTests {
-
-//	@Test
-//	void contextLoads() {
-//	}
-	
 	@Autowired
 	AppUserDetailsService appUserDetailsService;
 	@Autowired
@@ -38,10 +33,10 @@ class AuthenticationServiceApplicationTests {
 	public void addUser() throws Exception {
 
 		Set<Role> role = new HashSet<Role>();
-		role.add(new Role(2, "USER"));
+		role.add(new Role(2, "user"));
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/stock-market-charting/users")
-				.content(asJsonString(new Users(45, "users", "abcd", "ssss@sss.com", "1234567890",true, role)))
+				.content(asJsonString(new Users(100, "users", "abcd", "testmal76@gmail.com", "8585858585",true, role)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());

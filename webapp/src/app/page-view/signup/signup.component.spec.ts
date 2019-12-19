@@ -31,10 +31,12 @@ fdescribe('SignupComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('form invalid when empty', () => {
+    expect(component.signupForm.valid).toBeFalsy();
+  });
 
   it('component variables to be initilized', () => {
     expect(component.existFlag).toBeFalsy();
-    // expect(component.flagForFields).toBeFalsy();
     expect(component.signupForm.value.userName).toBeNull();
     expect(component.signupForm.value.password).toBeNull();
     expect(component.signupForm.value.confirmPassword).toBeNull();
@@ -42,7 +44,7 @@ fdescribe('SignupComponent', () => {
     expect(component.signupForm.value.contactNumber).toBeNull();
   });
 
-  it('created a form with username and password with login button', () => {
+  it('created a form with username,contactnumber,email and password with signup button', () => {
     const userNameContainer = fixture.debugElement.nativeElement.querySelector('#userName');
     const passwordContainer = fixture.debugElement.nativeElement.querySelector('#password');
     const contactContainer = fixture.debugElement.nativeElement.querySelector('#contactnumber');
@@ -54,9 +56,7 @@ fdescribe('SignupComponent', () => {
     expect(emailContainer).toBeDefined();
   });
 
-  xit('button loading', () => {
-    expect(fixture.debugElement.query(By.css('button')).properties.disabled).toBeFalsy();
-  });
+ 
 
 
 });
